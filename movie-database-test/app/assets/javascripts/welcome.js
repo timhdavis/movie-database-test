@@ -4,12 +4,21 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 */
 
-function jsRoar(name) {
-    alert(`I am ${name}, hear me roar!`)
-}
-
 $(function(){
-    $("p").click(function(){
-        $(this).hide();
+
+    var $users_ul = $('#users');
+
+    $.ajax({
+        type: 'GET',
+        url: 'https://jsonplaceholder.typicode.com/users',
+        success: function(users) {
+            console.log('success', users);
+
+            $.each(users, function(i, user) {
+                console.log("i=" + i + ", user.id=" + user.id + ", user.name=" + user.name);
+
+                $users_ul.append('<li>id: ' + user.id + ', name: ' + user.name + '</li>');
+            });
+        }
     });
 });
