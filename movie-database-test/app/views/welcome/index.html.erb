@@ -1,45 +1,75 @@
-<h1>Movie Database</h1>
-<div>
-    <ul id="navbar">
-        <li>Home</li>
-        <li>Movies</li>
-        <li>Reivews</li>
-        <li>About</li>
-    </ul>
-</div>
+<h1 id="main-section-title">Home</h1>
 
 <div id="movie-sort">
-    <p>Sort by:</p>
-    <ul>
-        <li>Title</li>
-        <li>Release Date</li>
-        <li>Genre</li>
-    </ul>
+    <span>Sort by:</span>
+    <div class="btn-group btn-group-sm" role="group" aria-label="Sort Movie By">
+        <button type="button" class="btn btn-info">Title</button>
+        <button type="button" class="btn btn-info">Release Date</button>
+        <button type="button" class="btn btn-info">Genre</button>
+    </div>
 </div>
 
-<div id="recent-reviews">
-    <p>Recent Reviews</p>
-    <ul>
-        <li>[Comment]</li>
-        <li>[Rating]</li>
-        <li>[Author]</li>
-    </ul>
-    <p>View All Reviews</p>
-</div>
+<div class="row">
+    <div class="col-sm">
+      
+        <div id="movies">
+            <%# For each movie: TODO %>
+            <div class="card">
+                <img class="card-img-left" src="" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            
+            <%# OLD: TODO: delete: %>
+            <ul id="movies_ul">
+            </ul>
+        </div>
 
-<div id="recent-movies">
-    <p>Recent Movies</p>
-    <ul>
-        <li>[Title]</li>
-        <li>[Rating]</li>
-    </ul>
-    <p>View All Movies</p>
-</div>
+
+    </div>
+    <div class="col-sm">
+      
+
+        <div id="recent-section">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div id="recent-reviews">
+                        <p>Recent Reviews</p>
+                        <ul>
+                            <li>[Comment]</li>
+                            <li>[Rating]</li>
+                            <li>[Author]</li>
+                        </ul>
+                        <p>View All Reviews</p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div id="recent-movies">
+                        <p>Recent Movies</p>
+                        <ul>
+                            <li>[Title]</li>
+                            <li>[Rating]</li>
+                        </ul>
+                        <p>View All Movies</p>
+                    </div>
+                </li>
+            </ul>
+        <div>
+
+      
+    </div>
+  </div>
 
 
-<div>
-    <ul id="movies">
-    </ul>
-</div>
+
+
+
+
+
+
+
 
 
