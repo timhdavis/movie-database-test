@@ -12,24 +12,14 @@
 <div class="row">
     <div class="col-sm">
       
-        <div id="movies">
+        <ul id="movie-list">
             <%# For each movie: TODO %>
-            <div class="card">
-                <img class="card-img-left" src="" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            
-            <%# OLD: TODO: delete: %>
-            <ul id="movies_ul">
-            </ul>
-        </div>
-
+            <%# --> See partial: _movie_card.html.erb %>
+            <%#= render(:partial => 'movie_card', :locals => {:title => 'Movie 1'}) %>
+        </ul>
 
     </div>
+
     <div class="col-sm">
       
 
@@ -62,7 +52,6 @@
       
     </div>
   </div>
-
 
 
 
