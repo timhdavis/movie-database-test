@@ -1,0 +1,54 @@
+<%# <h1 id="main-section-title">Home</h1> %>
+
+<div id="movie-sort">
+    <span>Sort by:</span>
+    <div class="btn-group btn-group-sm" role="group" aria-label="Sort Movie By">
+        <button type="button" class="btn btn-info" id="sort-by-title">Title</button>
+        <button type="button" class="btn btn-info" id="sort-by-date">Release Date</button>
+        <button type="button" class="btn btn-info" id="sort-by-genre">Genre</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm">
+      
+        <ul id="movie-list">
+            <%# For each movie: TODO %>
+            <%# --> See partial: _movie_card.html.erb %>
+            <%#= render(:partial => 'movie_card', :locals => {:title => 'Movie 1'}) %>
+        </ul>
+
+    </div>
+
+    <div class="col-sm">
+      
+
+        <div id="recent-section">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div id="recent-reviews">
+                        <p>Recent Reviews</p>
+                        <ul>
+                            <li>[Comment]</li>
+                            <li>[Rating]</li>
+                            <li>[Author]</li>
+                        </ul>
+                        <p>View All Reviews</p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div id="recent-movies">
+                        <p>Recent Movies</p>
+                        <ul>
+                            <li>[Title]</li>
+                            <li>[Rating]</li>
+                        </ul>
+                        <p>View All Movies</p>
+                    </div>
+                </li>
+            </ul>
+        <div>
+
+      
+    </div>
+  </div>

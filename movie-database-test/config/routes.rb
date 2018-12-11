@@ -4,5 +4,11 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
 
+  # Resources: (maps HTTP verbs to Controller actions)
+
+  resources :movies
+  resources :reviews
+  resources :users
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
