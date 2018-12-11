@@ -1,2 +1,80 @@
-<h1>Movies#show</h1>
-<p>Find me in app/views/movies/show.html.erb</p>
+<div id="movie-card">
+    <%# placeholder %>
+</div>
+
+
+<script>
+// jQeury:
+$(function(){
+
+    var $movieCard = $('#movie-card');
+    var $api_movie_id = <%= @api_movie_id %> //'335983';
+
+    console.log("API_MOVIE_ID given from controller", <%= @api_movie_id %>)
+
+    var getMovieHTML = function(movie) {
+
+        var html = `<div class="movie-card">
+                <div class="card d-flex flex-row">
+                        <img class="rounded" src="${getMovieImage(movie)}" alt="Movie image">
+                        <!-- Add Rating Stars here -->
+                    <div class="card-body">
+                        <h3 class="card-title">${movie.title}</h3>
+                        <h6 class="card-title">Release Date: ${movie.release_date}</h6>
+                        <h6 class="card-title">Genre: ${getMainGenre(movie)}</h6>
+                        <p class="card-text">${movie.overview}</p>
+                        <a href="#" class="btn btn-primary">Add Review</a>
+                    </div>
+                </div>
+            </div>`;
+
+        return html;
+    }
+
+    // Returns the name of the first genre in the movie's genre list:
+    var getMainGenre = function(movie) {
+        // Check if Genre API call sucessful and movie has at least one genre:
+
+        console.log("getMainGenre: movie.genres[0].name = ", movie.genres[0].name);
+
+        if (movie.genres[0].name) {
+            // Return the first Genre name:
+            return movie.genres[0].name;
+        } else {
+            // Return a placeholder Genre:
+            return { id: -1, name: "Unknown Genre"}
+        }
+    }
+
+    // Returns the image url for the movie poster:
+    // See https://developers.themoviedb.org/3/getting-started/images for details.
+    var getMovieImage = function(movie) {
+
+        var imagePath = movie.poster_path; //OR backdrop_path;
+        var size = "w200";
+        return `https://image.tmdb.org/t/p/${size}${imagePath}`
+    }
+
+    // Get Movie (from TMDb movie_id):
+    // See https://developers.themoviedb.org/3/movies/get-movie-details for details.
+    $.ajax({
+        type: 'GET',
+        url: `https://api.themoviedb.org/3/movie/${$api_movie_id}?api_key=3ef6eb2432d3b79bfdb2b5bd0702e803`,
+        success: function(data) {
+            console.log('success', data);
+            
+            var movie = data;
+            
+            reloadMovieView(movie);
+        }
+    });
+
+    var reloadMovieView = function(movie) {
+        
+        $movieCard.empty();
+
+        $movieCard.html(getMovieHTML(movie));
+    }
+    
+});
+</script>

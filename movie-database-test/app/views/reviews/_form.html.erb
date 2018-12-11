@@ -1,0 +1,18 @@
+<%# Display any form errors at the top of the form: %>
+<% if @review.errors.any? %>
+    <% @review.errors.full_messages.each do |error_message| %>
+        <div class="alert alert-danger"><%= error_message %></div>
+    <% end %>
+<% end %>
+
+<%# Display the form fields: %>
+
+<p>
+    <%= form.label :rating %><br>
+    <%= form.number_field(:rating, {:class => 'form-control'}) %>
+</p>
+
+<p>
+    <%= form.label :comment, "Comment (Optional)" %><br>
+    <%= form.text_area(:comment, {:class => 'form-control'}) %>
+</p>
