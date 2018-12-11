@@ -13,67 +13,48 @@ $(function(){
 
     var getMovieHTML = function(movie) {
 
-        console.log("$genres[0]", $genres[0]);
-        console.log("movie.genres[0]", movie.genre_ids[0]);
-
         
 
-        var html = `<li class="card">
-            <img class="card-img-left" src="" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Movie title: ${movie.title}</h5>
-                <h5 class="card-title">Release Date: ${movie.release_date}</h5>
-                <h5 class="card-title">Genre: ${getMainGenre(movie).name}</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Add Review</a>
-            </div>
-        </li>`;
+        var html = `<div class="movie-card">
+                <div class="card d-flex flex-row">
+                        <img class="rounded" src="${getMovieImage(movie)}" alt="Movie image">
+                        <!-- Add Rating Stars here -->
+                    <div class="card-body">
+                        <h3 class="card-title">${movie.title}</h3>
+                        <h6 class="card-title">Release Date: ${movie.release_date}</h6>
+                        <h6 class="card-title">Genre: ${getMainGenre(movie).name}</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Add Review</a>
+                    </div>
+                </div>
+            </div>`;
 
         return html;
     }
 
     // Returns the name of the first genre in the movie's genre list:
     var getMainGenre = function(movie) {
-        return $genres.find(g => g.id === movie.genre_ids[0]);
+        // Check if Genre API call sucessful and movie has at least one genre:
+        if ($genres && movie.genre_ids[0]) {
+            // Return the Genre with the matching id:
+            return $genres.find(g => g.id === movie.genre_ids[0]);
+        } else {
+            // Return a placeholder Genre:
+            return { id: -1, name: "Unknown Genre"}
+        }
     }
 
-    var sortByTitle = function(movies) {
-        // Compare by title alphabetically (ascending):
-        movies.sort(function(m1, m2) {return m1.title > m2.title ? 1 : -1;});
+    // Returns the image url for the movie poster:
+    // See https://developers.themoviedb.org/3/getting-started/images for details.
+    var getMovieImage = function(movie) {
 
-        console.log(movies);
-
-        return movies;
-    }
-
-    var sortByReleaseDate = function(movies) {
-        // Compare by release date (newest first):
-        movies.sort(function(m1, m2) {return m1.release_date < m2.release_date ? 1 : -1;});
-
-        console.log(movies);
-
-        return movies;
-    }
-
-    var sortByGenre = function(movies) {
-        // Compare by genre alphabetically (ascending):
-        movies.sort(function(m1, m2) {return getMainGenre(m1).name > getMainGenre(m2).name ? 1 : -1;});
-
-        console.log(movies);
-
-        return movies;
-    }
-
-    // NOTE: This is not part of the requirements:
-    var sortByRatingAscending = function(movies) {
-        movies.sort(function(m1, m2) {return m1.vote_average - m2.vote_average});
-
-        console.log(movies);
-
-        return movies;
+        var imagePath = movie.poster_path; //OR backdrop_path;
+        var size = "w200";
+        return `https://image.tmdb.org/t/p/${size}${imagePath}`
     }
 
     // Get Genres:
+    // See https://developers.themoviedb.org/3/genres/get-movie-list for details.
     $.ajax({
         type: 'GET',
         url: 'https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=3ef6eb2432d3b79bfdb2b5bd0702e803',
@@ -93,6 +74,19 @@ $(function(){
     });
 
     // Get Movies (Now Playing):
+    // See https://developers.themoviedb.org/3/movies/get-now-playing for details.
+    $.ajax({
+        type: 'GET',
+        url: 'https://api.themoviedb.org/3/movie/now_playing?page=1&api_key=3ef6eb2432d3b79bfdb2b5bd0702e803',
+        success: function(data) {
+            console.log('success', data);
+            
+            $movies = sortByTitle(data.results);
+            
+            reloadMovieView();
+        }
+    });
+
     var reloadMovieView = function() {
         
         $movieList.empty();
@@ -106,19 +100,7 @@ $(function(){
         });
     }
 
-    $.ajax({
-        type: 'GET',
-        url: 'https://api.themoviedb.org/3/movie/now_playing?page=1&api_key=3ef6eb2432d3b79bfdb2b5bd0702e803',
-        success: function(data) {
-            console.log('success', data);
-            
-            $movies = sortByTitle(data.results);
-            
-            reloadMovieView();
-        }
-    });
-
-    // Sort button group:
+    // Listen to Sort button group:
 
     $('#sort-by-title').click(function() {
         console.log("Sorting by Title");
@@ -146,5 +128,34 @@ $(function(){
             reloadMovieView();
         }
     });
+
+    // Movie Sorting methods:
+
+    var sortByTitle = function(movies) {
+        // Compare by title alphabetically (ascending):
+        movies.sort(function(m1, m2) {return m1.title > m2.title ? 1 : -1;});
+
+        console.log(movies);
+
+        return movies;
+    }
+
+    var sortByReleaseDate = function(movies) {
+        // Compare by release date (newest first):
+        movies.sort(function(m1, m2) {return m1.release_date < m2.release_date ? 1 : -1;});
+
+        console.log(movies);
+
+        return movies;
+    }
+
+    var sortByGenre = function(movies) {
+        // Compare by genre alphabetically (ascending):
+        movies.sort(function(m1, m2) {return getMainGenre(m1).name > getMainGenre(m2).name ? 1 : -1;});
+
+        console.log(movies);
+
+        return movies;
+    }
     
 });
