@@ -2,6 +2,8 @@
     <%# placeholder %>
 </div>
 
+<h4>Average Rating: <%= @movie.average_rating.to_s %> / <%= maxRating %></h4>
+
 <h4>Add Review</h4>
 <%= form_for :review, url: reviews_path do |form| %>
 
