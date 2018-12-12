@@ -33,18 +33,22 @@ $(function(){
                         <!-- Add Rating Stars here -->
                     <div class="card-body">
                         <h3 class="card-title">
-                            <a href="movies/show?api_movie_id=${movie.id}">${movie.title}</a>
+                            <a href="movies/show?${getMovieParameters(movie)}">${movie.title}</a>
                         </h3>
                         
                         <h6 class="card-title">Release Date: ${movie.release_date}</h6>
                         <h6 class="card-title">Genre: ${getMainGenre(movie).name}</h6>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="reviews/new?api_movie_id=${movie.id}" class="btn btn-primary">Add Review</a>
+                        <a href="reviews/new?${getMovieParameters(movie)}" class="btn btn-primary">Add Review</a>
                     </div>
                 </div>
             </div>`;
 
         return html;
+    }
+
+    var getMovieParameters = function(movie) {
+        return `api_movie_id=${movie.id}&title=${movie.title}&release_date=${movie.release_date}&genre=${getMainGenre(movie)}&img_path=${movie.poster_path}`;
     }
 
     // Returns the name of the first genre in the movie's genre list:

@@ -50,7 +50,8 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params);
 
     # DEBUG ONLY:
-    @review.user = User.first; #TODO: change...get current user (or user from email)
+    puts("review_params[:email] = #{review_params[:email]}")
+    @review.user = User.get(review_params[:email]);
 
     @review.movie = Movie.find(params[:movie_id])
 
@@ -62,9 +63,12 @@ class ReviewsController < ApplicationController
         redirect_to @review.movie;
     else
         # If validations prevented save, reload form (with error message):
-        flash[:alert] = "Failed to add";
+        flash[:alert] = "Failed to add\n";
+        @review.errors.full_messages.each do |error_message|
+          flash[:alert] = "#{error_message}\n";
+        end
 
-        redirect_to movie_path(params[:movie_id]); # TODO: change...
+        redirect_to movie_path(params[:movie_id])
     end
   end
 
@@ -72,6 +76,6 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:review).permit(:rating, :comment, :movie_id, :user_id)
+    params.require(:review).permit(:rating, :comment, :movie_id, :user_id, :email)
   end
 end

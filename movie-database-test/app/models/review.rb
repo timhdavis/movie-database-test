@@ -5,4 +5,7 @@ class Review < ApplicationRecord
 
   # Required fields:
   validates :rating, presence: true
+  validates :rating, inclusion: 1..5
+  validates :email, presence: true
+
 end

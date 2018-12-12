@@ -1,6 +1,7 @@
 <div class="card">
   <div class="card-header">
     <strong><%= review.rating.to_s %></strong> / <%= maxRating %>
+     <%= link_to(review.movie.title ||= "View Movie", movie_path(review.movie)) %>
   </div>
   <div class="card-body">
     <blockquote class="blockquote mb-0">

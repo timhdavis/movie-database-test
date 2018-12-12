@@ -1,9 +1,9 @@
-<h1>Reviews#index</h1>
+<h4>All Reviews</h4>
 
 
-<% @reviews.each do |review| %>
+<% @reviews.reverse_each do |review| %>
     <p>
-        <%= render(:partial => 'review', :locals => {:review => review}) %>
+        <%= render(:partial => 'full_review', :locals => {:review => review}) %>
     </p>
     <hr>
 <% end %>

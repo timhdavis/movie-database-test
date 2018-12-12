@@ -7,9 +7,15 @@
 
 <%# Display the form fields: %>
 
+
+<p>
+    <%= form.label :email %><br>
+    <%= form.text_field(:email, {:class => 'form-control'}) %>
+</p>
+
 <p>
     <%= form.label :rating %><br>
-    <%= form.number_field(:rating, {:class => 'form-control'}) %>
+    <%= form.number_field(:rating, {:min => 1, :max => maxRating, :class => 'form-control'}) %>
 </p>
 
 <p>

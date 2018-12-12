@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181211222833) do
+ActiveRecord::Schema.define(version: 20181212224857) do
 
   create_table "movies", force: :cascade do |t|
     t.integer "api_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20181211222833) do
     t.string "title"
     t.string "release_date"
     t.string "genre"
+    t.string "img_path"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(version: 20181211222833) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
     t.index ["movie_id"], name: "index_reviews_on_movie_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end

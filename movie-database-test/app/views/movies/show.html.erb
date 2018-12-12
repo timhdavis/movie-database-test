@@ -2,23 +2,29 @@
     <%# placeholder %>
 </div>
 
-<% if (@movie && @movie.reviews) %>
-    <% @movie.reviews.each do |review| %>
+<h4>Add Review</h4>
+<%= form_for :review, url: reviews_path do |form| %>
+
+    <% puts("IN MOVIE/SHOW: @movie = #{@movie}; @movie.id = #{@movie.id}") %>
+    <%= render(:partial => 'reviews/form', :locals => {:form => form, :review => @review, :movie_id => @movie.id}) %>
+
+    <p>
+        <%= form.submit("Add Review", {:class => 'btn btn-primary'}) %>
+    </p>
+<% end %>
+
+<hr>
+
+<% if (@movie.reviews.empty?) %>
+    <h4>No Reviews Yet</h4>
+<% else %>
+    <h4>View Reviews</h4>
+    <% @movie.reviews.reverse_each do |review| %>
         <p>
             <%= render(:partial => 'reviews/review', :locals => {:review => review}) %>
         </p>
         <hr>
     <% end %>
-<% end %>
-
-<%= form_for :review, url: reviews_path do |form| %>
-
-    <% puts("IN MOVIE/SHOW: @movie = #{@movie} /// @movie.id = #{@movie.id}") %>
-    <%= render(:partial => 'reviews/form', :locals => {:form => form, :review => @review, :movie_id => @movie.id}) %>
-
-    <p>
-        <%= form.submit("Add Review", {:class => 'btn btn-success btn-block'}) %>
-    </p>
 <% end %>
 
 
@@ -42,7 +48,6 @@ $(function() {
                         <h6 class="card-title">Release Date: ${movie.release_date}</h6>
                         <h6 class="card-title">Genre: ${getMainGenre(movie)}</h6>
                         <p class="card-text">${movie.overview}</p>
-                        <a href="#" class="btn btn-primary">Add Review</a>
                     </div>
                 </div>
             </div>`;

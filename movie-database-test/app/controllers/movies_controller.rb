@@ -10,7 +10,9 @@ class MoviesController < ApplicationController
       @movie = Movie.find_by_api_id(params[:api_movie_id])
 
       if (!@movie) # Movie not in DB yet:
-        @movie = Movie.create(api_id: params[:api_movie_id])
+        @movie = Movie.create(api_id: params[:api_movie_id], title: params[:title], 
+          release_date: params[:release_date], genre: params[:genre], img_path: params[:img_path])
+        
         puts("NEW Movie created from api_movie_id = " + params[:api_movie_id])
       end
 
