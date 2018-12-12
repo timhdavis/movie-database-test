@@ -43,21 +43,28 @@ class ReviewsController < ApplicationController
 
   # Called when the New Review form is submitted:
   def create
+
+    puts("params[:movie_id] = #{params[:movie_id]}")
+
     # Create a new review instance that will be used in the form:
     @review = Review.new(review_params);
 
     # DEBUG ONLY:
-    @review.user = User.first;
+    @review.user = User.first; #TODO: change...get current user (or user from email)
+
+    @review.movie = Movie.find(params[:movie_id])
 
     if(@review.save)
         # Present a 1-time flash message to the user after redirect:
         flash[:notice] = "Review created successfully.";
 
         # If saved to DB successfully, go to show page:
-        redirect_to @review;
+        redirect_to @review.movie;
     else
         # If validations prevented save, reload form (with error message):
-        render 'new'; # TODO: change...
+        flash[:alert] = "Failed to add";
+
+        redirect_to movie_path(params[:movie_id]); # TODO: change...
     end
   end
 

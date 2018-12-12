@@ -2,13 +2,32 @@
     <%# placeholder %>
 </div>
 
+<% if (@movie && @movie.reviews) %>
+    <% @movie.reviews.each do |review| %>
+        <p>
+            <%= render(:partial => 'reviews/review', :locals => {:review => review}) %>
+        </p>
+        <hr>
+    <% end %>
+<% end %>
+
+<%= form_for :review, url: reviews_path do |form| %>
+
+    <% puts("IN MOVIE/SHOW: @movie = #{@movie} /// @movie.id = #{@movie.id}") %>
+    <%= render(:partial => 'reviews/form', :locals => {:form => form, :review => @review, :movie_id => @movie.id}) %>
+
+    <p>
+        <%= form.submit("Add Review", {:class => 'btn btn-success btn-block'}) %>
+    </p>
+<% end %>
+
 
 <script>
 // jQeury:
-$(function(){
+$(function() {
 
     var $movieCard = $('#movie-card');
-    var $api_movie_id = <%= @api_movie_id %> //'335983';
+    var $api_movie_id = <%= @api_movie_id ||= @movie.api_id %>
 
     console.log("API_MOVIE_ID given from controller", <%= @api_movie_id %>)
 

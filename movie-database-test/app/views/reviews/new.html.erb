@@ -4,7 +4,7 @@
 
 <%= form_for :review, url: reviews_path do |form| %>
 
-    <%= render(:partial => 'form', :locals => {:form => form}) %>
+    <%= render(:partial => 'form', :locals => {:form => form, :review => @review, :movie_id => @review.movie_id}) %>
 
     <p>
         <%= form.submit("Add Review", {:class => 'btn btn-success btn-block'}) %>

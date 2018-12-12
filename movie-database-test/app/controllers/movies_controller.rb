@@ -6,11 +6,18 @@ class MoviesController < ApplicationController
 
     if (params[:id].present?)
       @movie = Movie.find(params[:id])
-      redirect_to @movie
     elsif (params[:api_movie_id].present?)
+      @movie = Movie.find_by_api_id(params[:api_movie_id])
+
+      if (!@movie) # Movie not in DB yet:
+        @movie = Movie.create(api_id: params[:api_movie_id])
+        puts("NEW Movie created from api_movie_id = " + params[:api_movie_id])
+      end
+
       @api_movie_id = params[:api_movie_id];
     end
 
+    @review = Review.new
     
   end
 
