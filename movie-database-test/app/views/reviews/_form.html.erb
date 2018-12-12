@@ -16,3 +16,9 @@
     <%= form.label :comment, "Comment (Optional)" %><br>
     <%= form.text_area(:comment, {:class => 'form-control'}) %>
 </p>
+
+<p>
+    <%= form.hidden_field :movie_id %>
+    <%= hidden_field_tag 'selected', @review.movie_id  %>
+</p>
+

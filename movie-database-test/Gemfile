@@ -56,3 +56,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Added:
 gem 'jquery-rails'
 gem 'bootstrap'
+
+group :development do
+  gem 'rb-readline' # To fix an issue with Rails Console not loading on Mac. See https://github.com/rails/rails/issues/26658
+end

@@ -4,5 +4,4 @@ class Movie < ApplicationRecord
 
     # Required fields:
     validates :api_id, presence: true
-    validates :year, presence: true
 end

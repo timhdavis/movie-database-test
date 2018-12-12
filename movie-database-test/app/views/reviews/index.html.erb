@@ -1,2 +1,9 @@
 <h1>Reviews#index</h1>
-<p>Find me in app/views/reviews/index.html.erb</p>
+
+
+<% @reviews.each do |review| %>
+    <p>
+        <%= render(:partial => 'review', :locals => {:review => review}) %>
+    </p>
+    <hr>
+<% end %>

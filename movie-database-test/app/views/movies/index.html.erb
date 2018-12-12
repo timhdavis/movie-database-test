@@ -41,7 +41,7 @@ $(function(){
                         <h6 class="card-title">Release Date: ${movie.release_date}</h6>
                         <h6 class="card-title">Genre: ${getMainGenre(movie).name}</h6>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Add Review</a>
+                        <a href="reviews/new?api_movie_id=${movie.id}" class="btn btn-primary">Add Review</a>
                     </div>
                 </div>
             </div>`;
