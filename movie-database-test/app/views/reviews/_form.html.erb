@@ -14,8 +14,9 @@
 </p>
 
 <p>
-    <%= form.label :rating %><br>
-    <%= form.number_field(:rating, {:min => 1, :max => maxRating, :class => 'form-control'}) %>
+    <div id="rating-form">
+        <label>Rating</label><br>
+    </div>
 </p>
 
 <p>
@@ -28,3 +29,11 @@
     <%= hidden_field_tag('movie_id', movie_id)  %>
 </div>
 
+<script>
+    $(function(){
+        $("#rating-form").raty({
+            path: "/assets/",
+            scoreName: "review[rating]"
+        });
+    });
+</script>
