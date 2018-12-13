@@ -1,9 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user_name: MyString
-  email: MyString
+# Schema:
+#   create_table "users", force: :cascade do |t|
+#    t.string "user_name"
+#    t.string "email"
+#    t.datetime "created_at", null: false
+#    t.datetime "updated_at", null: false
+#  end
 
-two:
-  user_name: MyString
-  email: MyString
+valid_user_1:
+  email: "tester1_email@test.com"
+  user_name: "tester1"
+
+valid_user_1:
+  email: "tester2_email@test.com"
+  user_name: "tester2"
