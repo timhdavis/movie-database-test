@@ -2,7 +2,7 @@
     <%# placeholder %>
 </div>
 
-<h4>Average Rating: <%= @movie.average_rating.to_s %> / <%= maxRating %></h4>
+<h4>Average Rating: <span class="review-rating" data-score="<%= @movie.average_rating %>"></span> <strong><%= @movie.average_rating.to_s %></strong> / <%= maxRating %></h4>
 
 <h4>Add Review</h4>
 <%= form_for :review, url: reviews_path do |form| %>
@@ -101,6 +101,14 @@ $(function() {
 
         $movieCard.html(getMovieHTML(movie));
     }
+
+    $(".review-rating").raty ({
+        readOnly: true,
+        score: function() {
+            return $(this).attr("data-score");
+        },
+        path: "/assets/"
+    });
     
 });
 </script>

@@ -1,6 +1,8 @@
 <div class="card">
   <div class="card-header">
+    <span class="review-rating" data-score="<%= review.rating %>"></span>
     <strong><%= review.rating.to_s %></strong> / <%= maxRating %>
+    
   </div>
   <div class="card-body">
     <blockquote class="blockquote mb-0">
@@ -9,3 +11,18 @@
     </blockquote>
   </div>
 </div>
+
+<script>
+    $(function() {
+        
+        $(".review-rating").raty ({
+            readOnly: true,
+            score: function() {
+                return $(this).attr("data-score");
+            },
+            path: "/assets/"
+        });
+
+
+    });
+</script>
