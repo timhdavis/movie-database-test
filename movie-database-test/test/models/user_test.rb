@@ -15,4 +15,10 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil @user.errors[:name], 'no validation error for email present'
   end
 
+  # Test associations:
+
+  test '#reviews' do
+    assert_equal 2, @user.reviews.size
+  end
+
 end

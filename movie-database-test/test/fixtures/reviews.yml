@@ -18,3 +18,15 @@ valid_review_1:
   email: "tester1_email@test.com"
   movie: valid_movie_1
   user: valid_user_1
+
+valid_review_2:
+  rating: 1
+  email: "tester2_email@test.com"
+  movie: valid_movie_1
+  user: valid_user_2
+
+valid_review_3:
+  rating: 5
+  email: "tester1_email@test.com"
+  movie: valid_movie_2
+  user: valid_user_1

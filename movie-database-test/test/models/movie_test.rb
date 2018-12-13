@@ -15,5 +15,11 @@ class MovieTest < ActiveSupport::TestCase
     assert_not_nil @movie.errors[:name], 'no validation error for api_id present'
   end
 
+  # Test associations:
+
+  test '#reviews' do
+    assert_equal 2, @movie.reviews.size
+  end
+
 
 end
