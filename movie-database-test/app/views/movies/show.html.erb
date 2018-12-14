@@ -32,7 +32,6 @@
         <p>
             <%= render(:partial => 'reviews/review', :locals => {:review => review}) %>
         </p>
-        <hr>
     <% end %>
 <% end %>
 
@@ -50,8 +49,7 @@ $(function() {
 
         var html = `<div class="movie-card">
                 <div class="card d-flex flex-row">
-                        <img class="rounded" src="${getMovieImage(movie)}" alt="Movie image">
-                        <!-- Add Rating Stars here -->
+                    <img class="rounded" src="${getMovieImage(movie)}" alt="Movie image">
                     <div class="card-body">
                         <h3 class="card-title">${movie.title}</h3>
                         <h6 class="card-title">Release Date: ${movie.release_date}</h6>

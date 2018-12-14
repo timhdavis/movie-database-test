@@ -22,4 +22,5 @@ class Movie < ApplicationRecord
         # Return the average score of all ratings:
         return (sum.to_f / self.reviews.size.to_f).round(2) # Round to 2 decimal places.
     end
+
 end

@@ -43,13 +43,11 @@ class ReviewsController < ApplicationController
 
   # Called when the New Review form is submitted:
   def create
-
-    puts("params[:movie_id] = #{params[:movie_id]}")
-
     # Create a new review instance that will be used in the form:
     @review = Review.new(review_params);
 
-    puts("review_params[:email] = #{review_params[:email]}")
+    # Set user and movie:
+    
     @review.user = User.find_or_create(review_params[:email]);
 
     @review.movie = Movie.find(params[:movie_id])

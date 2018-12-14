@@ -21,6 +21,7 @@ class MoviesController < ApplicationController
       @api_movie_id = params[:api_movie_id];
     end
 
+    # Update the stored average rating:
     @movie.average_rating = @movie.calculated_average_rating
 
     @review = Review.new

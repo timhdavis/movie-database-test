@@ -23,7 +23,7 @@ $(function(){
                             <a href="movies/show?${getMovieParameters(movie)}">${movie.title}</a>
                         </h3>
                         
-                        <h6 class="card-title">Release Date: ${movie.release_date}</h6>
+                        <h6 class="card-title">Release Date: ${getReleaseDateText(movie)}</h6>
                         <h6 class="card-title">Genre: ${getMainGenre(movie).name}</h6>
                         <p class="card-text">${getMovieDescription(movie)}</p>
                         <a href="movies/show?${getMovieParameters(movie)}" class="btn btn-primary btn-sm">Add Review</a>
@@ -70,6 +70,27 @@ $(function(){
         }
 
         return description
+    }
+
+    const getReleaseDate = function(movie) {
+        const date_text = movie.release_date;
+        const date = new Date(date_text + "T00:00:00Z");
+
+        return date;
+    }
+
+    const getReleaseDateText = function(movie) {
+        const date = getReleaseDate(movie);
+
+        const options = {  
+            day : 'numeric',
+            month : 'short',
+            year : 'numeric'
+        };
+
+        const dateText = date.toLocaleDateString(undefined, options)
+
+        return dateText;
     }
 
     // Get Genres:
@@ -167,9 +188,10 @@ $(function(){
 
     var sortByReleaseDate = function(movies) {
         // Compare by release date (newest first):
-        movies.sort(function(m1, m2) {return m1.release_date < m2.release_date ? 1 : -1;});
+        // movies.sort(function(m1, m2) {return m1.release_date < m2.release_date ? 1 : -1;});
 
-        console.log(movies);
+        movies.sort(function(m1, m2) {return getReleaseDate(m1) < getReleaseDate(m2) ? 1 : -1;});
+        
 
         return movies;
     }
@@ -177,8 +199,6 @@ $(function(){
     var sortByGenre = function(movies) {
         // Compare by genre alphabetically (ascending):
         movies.sort(function(m1, m2) {return getMainGenre(m1).name > getMainGenre(m2).name ? 1 : -1;});
-
-        console.log(movies);
 
         return movies;
     }
