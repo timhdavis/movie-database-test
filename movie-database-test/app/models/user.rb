@@ -8,7 +8,7 @@ class User < ApplicationRecord
     # Other methods:
 
     # Return an existing user, if exists, or create a new one:
-    def self.get(email)
+    def self.find_or_create(email)
         user = User.find_by_email(email)
 
         # If no user with this email in the database:

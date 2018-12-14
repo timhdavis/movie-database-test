@@ -2,12 +2,21 @@
     <%# placeholder %>
 </div>
 
-<h4>Average Rating: <span class="review-rating" data-score="<%= @movie.average_rating %>"></span> <strong><%= @movie.average_rating.to_s %></strong> / <%= maxRating %></h4>
+<h4>
+    <% if (@movie.average_rating > 0) %>
+        Average Rating: 
+        <span class="review-rating" data-score="<%= @movie.average_rating %>">
+        </span> <strong><%= @movie.average_rating.to_s %></strong> / <%= maxRating %>
+    <% else %>
+        No Reviews Yet
+    <% end %>
+</h4>
+
+<hr>
 
 <h4>Add Review</h4>
 <%= form_for :review, url: reviews_path do |form| %>
 
-    <% puts("IN MOVIE/SHOW: @movie = #{@movie}; @movie.id = #{@movie.id}") %>
     <%= render(:partial => 'reviews/form', :locals => {:form => form, :review => @review, :movie_id => @movie.id}) %>
 
     <p>
@@ -17,9 +26,7 @@
 
 <hr>
 
-<% if (@movie.reviews.empty?) %>
-    <h4>No Reviews Yet</h4>
-<% else %>
+<% if (!@movie.reviews.empty?) %>
     <h4>View Reviews</h4>
     <% @movie.reviews.reverse_each do |review| %>
         <p>

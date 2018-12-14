@@ -49,9 +49,8 @@ class ReviewsController < ApplicationController
     # Create a new review instance that will be used in the form:
     @review = Review.new(review_params);
 
-    # DEBUG ONLY:
     puts("review_params[:email] = #{review_params[:email]}")
-    @review.user = User.get(review_params[:email]);
+    @review.user = User.find_or_create(review_params[:email]);
 
     @review.movie = Movie.find(params[:movie_id])
 
@@ -78,4 +77,10 @@ class ReviewsController < ApplicationController
   def review_params
     params.require(:review).permit(:rating, :comment, :movie_id, :user_id, :email)
   end
+
+  def set_page_title
+    @page = "reviews"
+  end
+
+
 end

@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+
   def index
     @movies = Movie.all
   end
@@ -64,6 +65,10 @@ class MoviesController < ApplicationController
 
     # Return the average score of all ratings:
     return (sum.to_f / movie.reviews.size.to_f).round(2) # Round to 2 decimal places.
+  end
+
+  def set_page_title
+    @page = "movies"
   end
 
 end

@@ -1,26 +1,15 @@
 <%# <h1 id="main-section-title">Home</h1> %>
 
-<div id="movie-sort">
-    <span>Sort by:</span>
-    <div class="btn-group btn-group-sm" role="group" aria-label="Sort Movie By">
-        <button type="button" class="btn btn-info" id="sort-by-title">Title</button>
-        <button type="button" class="btn btn-info" id="sort-by-date">Release Date</button>
-        <button type="button" class="btn btn-info" id="sort-by-genre">Genre</button>
-    </div>
-</div>
+<%= render(:partial => 'movies/movie_sorter') %>
 
 <div class="row">
     <div class="col-sm">
-      
-        <ul id="movie-list">
-            <%# For each movie: TODO %>
-            <%# --> See partial: _movie_card.html.erb %>
-            <%#= render(:partial => 'movie_card', :locals => {:title => 'Movie 1'}) %>
-        </ul>
+
+        <%= render(:partial => 'movies/movies') %>
 
     </div>
 
-    <div class="col-sm">
+    <div class="col-sm-auto">
       
 
         <div id="recent-section">
@@ -52,12 +41,6 @@
       
     </div>
   </div>
-
-
-
-
-
-
 
 
 
