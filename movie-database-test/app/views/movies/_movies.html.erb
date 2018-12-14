@@ -111,11 +111,17 @@ $(function(){
         $movieList.empty();
 
         $.each($movies, function(i, movie) {
-            console.log("i=" + i + ", movie.title= " + movie.title);
 
-            // $movieTemplate.append(Mustache.render(movieTemplate, movie));
-            // $movieList.append('<li>title: ' + movie.title + '</li>');
-            $movieList.append(getMovieHTML(movie));
+            if (movie) {
+                console.log("i=" + i + ", movie.title= " + movie.title);
+
+                // $movieTemplate.append(Mustache.render(movieTemplate, movie));
+                // $movieList.append('<li>title: ' + movie.title + '</li>');
+                $movieList.append(getMovieHTML(movie));
+            } else {
+                console.log("failed to get movie; i = " + i);
+            }
+            
         });
     }
 

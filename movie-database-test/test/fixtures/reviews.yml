@@ -14,7 +14,7 @@
 # end
 
 valid_review_1:
-  rating: 3
+  rating: 5
   email: "tester1_email@test.com"
   movie: valid_movie_1
   user: valid_user_1

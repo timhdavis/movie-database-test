@@ -1,5 +1,5 @@
 module ReviewsHelper
     def maxRating
-        return 5
+        return Review.max_rating
     end
 end

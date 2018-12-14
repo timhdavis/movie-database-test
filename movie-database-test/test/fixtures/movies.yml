@@ -15,5 +15,8 @@
 valid_movie_1:
   api_id: "11111"
 
-valid_movie_1:
+valid_movie_2:
   api_id: "22222"
+
+valid_movie_without_reviews:
+  api_id: "33333"

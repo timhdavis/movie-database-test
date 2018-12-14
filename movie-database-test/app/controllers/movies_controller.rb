@@ -21,7 +21,7 @@ class MoviesController < ApplicationController
       @api_movie_id = params[:api_movie_id];
     end
 
-    @movie.average_rating = get_updated_average_rating(@movie)
+    @movie.average_rating = @movie.calculated_average_rating
 
     @review = Review.new
     
@@ -49,22 +49,6 @@ class MoviesController < ApplicationController
 
   def movie_params
     params.require(:review).permit(:api_id)
-  end
-
-  def get_updated_average_rating(movie)
-    # Return 0 if no reviews yet:
-    return 0 if movie.reviews.empty?
-
-    movie.average_rating = 0
-
-    sum = 0
-
-    movie.reviews.each do |review|
-      sum += review.rating.to_i
-    end
-
-    # Return the average score of all ratings:
-    return (sum.to_f / movie.reviews.size.to_f).round(2) # Round to 2 decimal places.
   end
 
   def set_page_title
