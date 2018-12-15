@@ -62,3 +62,8 @@ gem 'bootstrap'
 group :development do
   gem 'rb-readline' # To fix an issue with Rails Console not loading on Mac. See https://github.com/rails/rails/issues/26658
 end
+
+group :production do
+  # Use postgresql as the database for Active Record
+  gem 'pg', '~> 0.18'
+end
