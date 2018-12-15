@@ -5,6 +5,11 @@ class Movie < ApplicationRecord
     # Required fields:
     validates :api_id, presence: true
 
+    # Scopes:
+
+    scope :newest_first, lambda { order("created_at DESC") }
+    scope :recent, lambda { order("created_at DESC").limit(5) }
+
     # Other methods:
 
     def calculated_average_rating

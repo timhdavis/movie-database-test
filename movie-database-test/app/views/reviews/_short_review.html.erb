@@ -1,0 +1,25 @@
+<div>
+    <span class="review-rating" data-score="<%= review.rating %>"></span>
+    <span>
+        - <%= link_to(shortened_title(review.movie).to_s, movie_path(review.movie)) %>
+    </span>
+    <% if (review.comment) %>
+        <p><%= review.comment.truncate(30, separator: ' ') %></p>
+    <% end %>
+    
+</div>
+
+<script>
+    $(function() {
+        
+        $(".review-rating").raty ({
+            readOnly: true,
+            score: function() {
+                return $(this).attr("data-score");
+            },
+            path: "/assets/"
+        });
+
+
+    });
+</script>

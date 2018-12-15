@@ -41,7 +41,7 @@
 $(function() {
 
     var $movieCard = $('#movie-card');
-    var $api_movie_id = <%= @api_movie_id ||= @movie.api_id %>
+    var $apiMovieId = <%= @api_movie_id ||= @movie.api_id %>
 
     console.log("API_MOVIE_ID given from controller", <%= @api_movie_id %>)
 
@@ -52,7 +52,7 @@ $(function() {
                     <img class="rounded" src="${getMovieImage(movie)}" alt="Movie image">
                     <div class="card-body">
                         <h3 class="card-title">${movie.title}</h3>
-                        <h6 class="card-title">Release Date: ${movie.release_date}</h6>
+                        <h6 class="card-title">Release Date: ${getReleaseDateText(movie)}</h6>
                         <h6 class="card-title">Genre: ${getMainGenre(movie)}</h6>
                         <p class="card-text">${movie.overview}</p>
                     </div>
@@ -86,11 +86,32 @@ $(function() {
         return `https://image.tmdb.org/t/p/${size}${imagePath}`
     }
 
+    const getReleaseDate = function(movie) {
+        const date_text = movie.release_date;
+        const date = new Date(date_text + "T00:00:00Z");
+
+        return date;
+    }
+
+    const getReleaseDateText = function(movie) {
+        const date = getReleaseDate(movie);
+
+        const options = {  
+            day : 'numeric',
+            month : 'short',
+            year : 'numeric'
+        };
+
+        const dateText = date.toLocaleDateString(undefined, options)
+
+        return dateText;
+    }
+
     // Get Movie (from TMDb movie_id):
     // See https://developers.themoviedb.org/3/movies/get-movie-details for details.
     $.ajax({
         type: 'GET',
-        url: `https://api.themoviedb.org/3/movie/${$api_movie_id}?api_key=3ef6eb2432d3b79bfdb2b5bd0702e803`,
+        url: `https://api.themoviedb.org/3/movie/${$apiMovieId}?api_key=3ef6eb2432d3b79bfdb2b5bd0702e803`,
         success: function(data) {
             console.log('success', data);
             

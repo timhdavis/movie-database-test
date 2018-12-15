@@ -8,6 +8,11 @@ class Review < ApplicationRecord
   validates :rating, inclusion: 1..5
   validates :email, presence: true
 
+  # Scopes:
+
+  scope :newest_first, lambda { order("created_at DESC") }
+  scope :recent, lambda { order("created_at DESC").limit(5) }
+
   # Other methods:
 
   def self.max_rating

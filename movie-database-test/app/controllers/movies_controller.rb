@@ -23,6 +23,7 @@ class MoviesController < ApplicationController
 
     # Update the stored average rating:
     @movie.average_rating = @movie.calculated_average_rating
+    @movie.save
 
     @review = Review.new
     

@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
 
+  get 'welcome/about', as: 'about'
+
   get 'movies/show' # So can view a movie through API, even if not yet added to the database.
 
   # Resources: (maps HTTP verbs to Controller actions)

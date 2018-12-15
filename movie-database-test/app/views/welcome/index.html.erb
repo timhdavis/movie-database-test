@@ -16,23 +16,22 @@
             <ul class="list-group">
                 <li class="list-group-item">
                     <div id="recent-reviews">
-                        <p>Recent Reviews</p>
-                        <ul>
-                            <li>[Comment]</li>
-                            <li>[Rating]</li>
-                            <li>[Author]</li>
-                        </ul>
-                        <p>View All Reviews</p>
+                        <h5>Recent Reviews</h5>
+                        <% @reviews.each do |review| %>
+                            <%= render(:partial => 'reviews/short_review', :locals => {:review => review}) %>
+                            <hr>
+                        <% end %>
+                        <p><%= link_to("View All Reviews", reviews_path, {:class => "btn btn-secondary btn-sm"}) %></p>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div id="recent-movies">
-                        <p>Recent Movies</p>
-                        <ul>
-                            <li>[Title]</li>
-                            <li>[Rating]</li>
-                        </ul>
-                        <p>View All Movies</p>
+                        <h5>Recent Movies</h5>
+                        <% @movies.each do |movie| %>
+                            <%= render(:partial => 'movies/short_movie', :locals => {:movie => movie}) %>
+                        <% end %>
+
+                        <p><%= link_to("View All Movies", movies_path, {:class => "btn btn-secondary btn-sm"}) %></p>
                     </div>
                 </li>
             </ul>
