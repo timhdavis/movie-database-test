@@ -1,0 +1,32 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# Schema:
+# create_table "reviews", force: :cascade do |t|
+#   t.integer "rating"
+#   t.text "comment"
+#   t.integer "movie_id"
+#   t.integer "user_id"
+#   t.datetime "created_at", null: false
+#   t.datetime "updated_at", null: false
+#   t.string "email"
+#   t.index ["movie_id"], name: "index_reviews_on_movie_id"
+#   t.index ["user_id"], name: "index_reviews_on_user_id"
+# end
+
+valid_review_1:
+  rating: 5
+  email: "tester1_email@test.com"
+  movie: valid_movie_1
+  user: valid_user_1
+
+valid_review_2:
+  rating: 1
+  email: "tester2_email@test.com"
+  movie: valid_movie_1
+  user: valid_user_2
+
+valid_review_3:
+  rating: 5
+  email: "tester1_email@test.com"
+  movie: valid_movie_2
+  user: valid_user_1

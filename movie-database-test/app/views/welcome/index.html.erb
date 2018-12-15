@@ -1,2 +1,46 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<%# <h1 id="main-section-title">Home</h1> %>
+
+<%= render(:partial => 'movies/movie_sorter') %>
+
+<div class="row">
+    <div class="col-sm">
+
+        <%= render(:partial => 'movies/movies') %>
+
+    </div>
+
+    <div class="col-sm-auto">
+      
+
+        <div id="recent-section">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div id="recent-reviews">
+                        <h5>Recent Reviews</h5>
+                        <% @reviews.each do |review| %>
+                            <%= render(:partial => 'reviews/short_review', :locals => {:review => review}) %>
+                            <hr>
+                        <% end %>
+                        <p><%= link_to("View All Reviews", reviews_path, {:class => "btn btn-secondary btn-sm"}) %></p>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div id="recent-movies">
+                        <h5>Recent Movies</h5>
+                        <% @movies.each do |movie| %>
+                            <%= render(:partial => 'movies/short_movie', :locals => {:movie => movie}) %>
+                        <% end %>
+
+                        <p><%= link_to("View All Movies", movies_path, {:class => "btn btn-secondary btn-sm"}) %></p>
+                    </div>
+                </li>
+            </ul>
+        <div>
+
+      
+    </div>
+  </div>
+
+
+
+

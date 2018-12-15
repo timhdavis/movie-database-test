@@ -1,0 +1,140 @@
+<div id="movie-card">
+    <%# placeholder %>
+</div>
+
+<h4>
+    <% if (@movie.average_rating > 0) %>
+        Average Rating: 
+        <span class="review-rating" data-score="<%= @movie.average_rating %>">
+        </span> <strong><%= @movie.average_rating.to_s %></strong> / <%= maxRating %>
+    <% else %>
+        No Reviews Yet
+    <% end %>
+</h4>
+
+<hr>
+
+<h4>Add Review</h4>
+<%= form_for :review, url: reviews_path do |form| %>
+
+    <%= render(:partial => 'reviews/form', :locals => {:form => form, :review => @review, :movie_id => @movie.id}) %>
+
+    <p>
+        <%= form.submit("Add Review", {:class => 'btn btn-primary'}) %>
+    </p>
+<% end %>
+
+<hr>
+
+<% if (!@movie.reviews.empty?) %>
+    <h4>View Reviews</h4>
+    <% @movie.reviews.reverse_each do |review| %>
+        <p>
+            <%= render(:partial => 'reviews/review', :locals => {:review => review}) %>
+        </p>
+    <% end %>
+<% end %>
+
+
+<script>
+// jQeury:
+$(function() {
+
+    var $movieCard = $('#movie-card');
+    var $apiMovieId = <%= @api_movie_id ||= @movie.api_id %>
+
+    console.log("API_MOVIE_ID given from controller", <%= @api_movie_id %>)
+
+    var getMovieHTML = function(movie) {
+
+        var html = `<div class="movie-card">
+                <div class="card d-flex flex-row">
+                    <img class="rounded" src="${getMovieImage(movie)}" alt="Movie image">
+                    <div class="card-body">
+                        <h3 class="card-title">${movie.title}</h3>
+                        <h6 class="card-title">Release Date: ${getReleaseDateText(movie)}</h6>
+                        <h6 class="card-title">Genre: ${getMainGenre(movie)}</h6>
+                        <p class="card-text">${movie.overview}</p>
+                    </div>
+                </div>
+            </div>`;
+
+        return html;
+    }
+
+    // Returns the name of the first genre in the movie's genre list:
+    var getMainGenre = function(movie) {
+        // Check if Genre API call sucessful and movie has at least one genre:
+
+        console.log("getMainGenre: movie.genres[0].name = ", movie.genres[0].name);
+
+        if (movie.genres[0].name) {
+            // Return the first Genre name:
+            return movie.genres[0].name;
+        } else {
+            // Return a placeholder Genre:
+            return { id: -1, name: "Unknown Genre"}
+        }
+    }
+
+    // Returns the image url for the movie poster:
+    // See https://developers.themoviedb.org/3/getting-started/images for details.
+    var getMovieImage = function(movie) {
+
+        var imagePath = movie.poster_path; //OR backdrop_path;
+        var size = "w200";
+        return `https://image.tmdb.org/t/p/${size}${imagePath}`
+    }
+
+    const getReleaseDate = function(movie) {
+        const date_text = movie.release_date;
+        const date = new Date(date_text + "T00:00:00Z");
+
+        return date;
+    }
+
+    const getReleaseDateText = function(movie) {
+        const date = getReleaseDate(movie);
+
+        const options = {  
+            day : 'numeric',
+            month : 'short',
+            year : 'numeric'
+        };
+
+        const dateText = date.toLocaleDateString(undefined, options)
+
+        return dateText;
+    }
+
+    // Get Movie (from TMDb movie_id):
+    // See https://developers.themoviedb.org/3/movies/get-movie-details for details.
+    $.ajax({
+        type: 'GET',
+        url: `https://api.themoviedb.org/3/movie/${$apiMovieId}?api_key=3ef6eb2432d3b79bfdb2b5bd0702e803`,
+        success: function(data) {
+            console.log('success', data);
+            
+            var movie = data;
+            
+            reloadMovieView(movie);
+        }
+    });
+
+    var reloadMovieView = function(movie) {
+        
+        $movieCard.empty();
+
+        $movieCard.html(getMovieHTML(movie));
+    }
+
+    $(".review-rating").raty ({
+        readOnly: true,
+        score: function() {
+            return $(this).attr("data-score");
+        },
+        path: "/assets/"
+    });
+    
+});
+</script>

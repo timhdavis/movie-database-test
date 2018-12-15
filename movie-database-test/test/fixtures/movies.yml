@@ -1,0 +1,22 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# Schema:
+#   create_table "movies", force: :cascade do |t|
+#    t.integer "api_id"
+#    t.datetime "created_at", null: false
+#    t.datetime "updated_at", null: false
+#    t.float "average_rating"
+#    t.string "title"
+#    t.string "release_date"
+#    t.string "genre"
+#    t.string "img_path"
+#  end
+
+valid_movie_1:
+  api_id: "11111"
+
+valid_movie_2:
+  api_id: "22222"
+
+valid_movie_without_reviews:
+  api_id: "33333"

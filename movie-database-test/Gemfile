@@ -39,6 +39,8 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  # Added:
+  gem 'minitest-rails-capybara'
 end
 
 group :development do
@@ -52,3 +54,11 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Added:
+gem 'jquery-rails'
+gem 'bootstrap'
+
+group :development do
+  gem 'rb-readline' # To fix an issue with Rails Console not loading on Mac. See https://github.com/rails/rails/issues/26658
+end

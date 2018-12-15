@@ -1,0 +1,48 @@
+<%# Display any form errors at the top of the form: %>
+<% if review.errors.any? %>
+    <% review.errors.full_messages.each do |error_message| %>
+        <div class="alert alert-danger"><%= error_message %></div>
+    <% end %>
+<% end %>
+
+<%# Display the form fields: %>
+
+
+<p>
+    <%= form.label :email %><br>
+    <%= form.text_field(:email, {:class => 'form-control'}) %>
+</p>
+
+<p>
+    <div id="rating-form">
+        <label>Rating</label><br>
+    </div>
+</p>
+
+<p>
+    <%= form.label :comment, "Comment (Optional)" %><br>
+    <%= form.text_area(:comment, {:class => 'form-control'}) %>
+</p>
+
+<div>
+    <%= form.hidden_field :movie_id %>
+    <%= hidden_field_tag('movie_id', movie_id)  %>
+</div>
+
+<script>
+    $(function(){
+
+        
+
+        $("#rating-form").raty({
+            path: "/assets/",
+            scoreName: "review[rating]"
+        });
+
+        // $("img[alt='2']").first().trigger('click');
+
+        
+    });
+
+    
+</script>

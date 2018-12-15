@@ -1,0 +1,248 @@
+<div>
+    <div id="movie-alert">
+        <%# Placeholder alert %>
+    </div>
+
+    <ul id="movie-list">
+        <%# Placeholder list for movie cards. %>
+    </ul>
+
+    
+</div>
+
+<script>
+// jQeury:
+$(function(){
+
+    var $movieList = $('#movie-list');
+    var $movies;
+    var $genres = [];
+
+    const $alertDisplay = $("#movie-alert");
+
+    var getErrorHTML = function(error_message) {
+        const html = `<div class="alert alert-danger">
+            ${error_message}
+            </div>`;
+
+        return html;
+    }
+
+    var getMovieHTML = function(movie) {
+        
+        var html = `<div class="movie-card">
+                <div class="card d-flex flex-row">
+                        <img class="rounded" src="${getMovieImage(movie)}" alt="Movie image">
+                        <!-- Add Rating Stars here -->
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <a href="movies/show?${getMovieParameters(movie)}">${movie.title}</a>
+                        </h3>
+                        
+                        <h6 class="card-title">Release Date: ${getReleaseDateText(movie)}</h6>
+                        <h6 class="card-title">Genre: ${getMainGenre(movie).name}</h6>
+                        <p class="card-text">${getMovieDescription(movie)}</p>
+                        <a href="movies/show?${getMovieParameters(movie)}" class="btn btn-primary btn-sm">Add Review</a>
+                    </div>
+                </div>
+            </div>`;
+
+        return html;
+    }
+
+    // Returns the list of parameters for the View Movie link:
+    var getMovieParameters = function(movie) {
+        return `api_movie_id=${movie.id}&title=${movie.title}&release_date=${movie.release_date}&genre=${getMainGenre(movie)}&img_path=${movie.poster_path}`;
+    }
+
+    // Returns the name of the first genre in the movie's genre list:
+    var getMainGenre = function(movie) {
+        // Check if Genre API call sucessful and movie has at least one genre:
+        if ($genres && movie.genre_ids[0]) {
+            // Return the Genre with the matching id:
+            return $genres.find(g => g.id === movie.genre_ids[0]);
+        } else {
+            // Return a placeholder Genre:
+            return { id: -1, name: "Unknown Genre"}
+        }
+    }
+
+    // Returns the image url for the movie poster:
+    // See https://developers.themoviedb.org/3/getting-started/images for details.
+    var getMovieImage = function(movie) {
+
+        var imagePath = movie.poster_path; //OR backdrop_path;
+        var size = "w200";
+        return `https://image.tmdb.org/t/p/${size}${imagePath}`
+    }
+
+    // Returns the movie descritption (truncated):
+    var getMovieDescription = function(movie) {
+        var maxLength = 200; // characters
+
+        var description = movie.overview;
+
+        if (description.length > maxLength) {
+            description = description.substring(0, maxLength);
+            description += "...";
+        }
+
+        return description
+    }
+
+    // Returns the release data as a Date object:
+    const getReleaseDate = function(movie) {
+        const date_text = movie.release_date;
+        const date = new Date(date_text + "T00:00:00Z");
+
+        return date;
+    }
+
+    // Returns the release date as a formatted string: "Aug 28, 2018", for example.
+    const getReleaseDateText = function(movie) {
+        const date = getReleaseDate(movie);
+
+        const options = {  
+            day : 'numeric',
+            month : 'short',
+            year : 'numeric'
+        };
+
+        const dateText = date.toLocaleDateString(undefined, options)
+
+        return dateText;
+    }
+
+    // Get Genres:
+    // See https://developers.themoviedb.org/3/genres/get-movie-list for details.
+    $.ajax({
+        type: 'GET',
+        url: 'https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=3ef6eb2432d3b79bfdb2b5bd0702e803',
+        success: function(data) {
+            console.log('success', data);
+            
+            $genres = [];
+
+            $.each(data.genres, function(i, genre) {
+                console.log("i=" + i + ", genre.name= " + genre.name);
+
+                $genres.push(genre);
+
+                //console.log("$genres = " + $genres);
+            });
+        }
+    });
+
+    // Get Movies (Now Playing):
+    // See https://developers.themoviedb.org/3/movies/get-now-playing for details.
+    $.ajax({
+        type: 'GET',
+        url: 'https://api.themoviedb.org/3/movie/now_playing?page=1&api_key=3ef6eb2432d3b79bfdb2b5bd0702e803',
+        success: function(data) {
+            console.log('success', data);
+
+            if (!data || !data.results) {
+                const error_message = "One or more movies failed to load. Try reloading the page.";
+                setErrorMessage(error_message);
+            } else {
+                $movies = sortByTitle(data.results);
+            
+                reloadMovieView();
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            const error_message = "One or more movies failed to load. Try reloading the page.";
+            setErrorMessage(error_message);
+        }
+    });
+
+    // Empties and resets the list of movies on the page:
+    var reloadMovieView = function() {
+        
+        $movieList.empty();
+
+        $.each($movies, function(i, movie) {
+
+            if (movie) {
+                console.log("i=" + i + ", movie.title= " + movie.title);
+
+                // $movieTemplate.append(Mustache.render(movieTemplate, movie));
+                // $movieList.append('<li>title: ' + movie.title + '</li>');
+                $movieList.append(getMovieHTML(movie));
+            } else {
+                console.log("failed to get movie; i = " + i);
+                
+                const error_message = "One or more movies failed to load. Try reloading the page.";
+                setErrorMessage(error_message);
+            }
+            
+        });
+    }
+
+    // Adds the error message on the page:
+    const setErrorMessage = function(error_message) {
+        $alertDisplay.append(getErrorHTML(error_message));
+    }
+
+    // Listen to Sort button group:
+
+    $('#sort-by-title').click(function() {
+        console.log("Sorting by Title");
+
+        if ($movies) {
+            sortByTitle($movies);
+            reloadMovieView();
+        }
+    });
+
+    $('#sort-by-date').click(function() {
+        console.log("Sorting by Date");
+
+        if ($movies) {
+            sortByReleaseDate($movies);
+            reloadMovieView();
+        }
+    });
+
+    $('#sort-by-genre').click(function() {
+        console.log("Sorting by Genre");
+
+        if ($movies) {
+            sortByGenre($movies);
+            reloadMovieView();
+        }
+    });
+
+    // Movie Sorting methods:
+
+    var sortByTitle = function(movies) {
+        // Compare by title alphabetically (ascending):
+        movies.sort(function(m1, m2) {return m1.title > m2.title ? 1 : -1;});
+
+        console.log(movies);
+
+        return movies;
+    }
+
+    var sortByReleaseDate = function(movies) {
+        // Compare by release date (newest first):
+        // movies.sort(function(m1, m2) {return m1.release_date < m2.release_date ? 1 : -1;});
+
+        movies.sort(function(m1, m2) {return getReleaseDate(m1) < getReleaseDate(m2) ? 1 : -1;});
+        
+
+        return movies;
+    }
+
+    var sortByGenre = function(movies) {
+        // Compare by genre alphabetically (ascending):
+        movies.sort(function(m1, m2) {return getMainGenre(m1).name > getMainGenre(m2).name ? 1 : -1;});
+
+        return movies;
+    }
+
+    
+
+    
+});
+</script>

@@ -1,0 +1,46 @@
+<div id="page-title" class="<%= @page ||= "home" %>"></div>
+
+<div id="main-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Movie Database</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" id="nav-home">
+                <%= link_to "Home", root_path, {:class => "nav-link"} %>
+            </li>
+            <li class="nav-item" id="nav-movies">
+                <%= link_to "Movies", movies_path, {:class => "nav-link"} %>
+            </li>
+            <li class="nav-item" id="nav-reviews">
+                <%= link_to "Reviews", reviews_path, {:class => "nav-link"} %>
+            </li>
+            <li class="nav-item" id="nav-about">
+                <%= link_to "About", about_path, {:class => "nav-link"} %>
+            </li>
+        </ul>
+        </div>
+    </nav>
+</div>
+
+<script>
+    $(function() {
+        if ($("#page-title").hasClass("home")) {
+            $("li#nav-home").addClass("active");
+        }
+        else if ($("#page-title").hasClass("movies")) {
+            $("li#nav-movies").addClass("active");
+        }
+        else if ($("#page-title").hasClass("reviews")) {
+            $("li#nav-reviews").addClass("active");
+        }
+        else if ($("#page-title").hasClass("about")) {
+            $("li#nav-about").addClass("active");
+        }
+        else {
+            console.log("No #page-title recognized.");
+        }
+    });
+</script>
