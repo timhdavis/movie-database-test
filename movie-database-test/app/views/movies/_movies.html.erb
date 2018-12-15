@@ -1,7 +1,13 @@
 <div>
+    <div id="movie-alert">
+        <%# Placeholder alert %>
+    </div>
+
     <ul id="movie-list">
         <%# Placeholder list for movie cards. %>
     </ul>
+
+    
 </div>
 
 <script>
@@ -11,6 +17,16 @@ $(function(){
     var $movieList = $('#movie-list');
     var $movies;
     var $genres = [];
+
+    const $alertDisplay = $("#movie-alert");
+
+    var getErrorHTML = function(error_message) {
+        const html = `<div class="alert alert-danger">
+            ${error_message}
+            </div>`;
+
+        return html;
+    }
 
     var getMovieHTML = function(movie) {
         
@@ -34,6 +50,7 @@ $(function(){
         return html;
     }
 
+    // Returns the list of parameters for the View Movie link:
     var getMovieParameters = function(movie) {
         return `api_movie_id=${movie.id}&title=${movie.title}&release_date=${movie.release_date}&genre=${getMainGenre(movie)}&img_path=${movie.poster_path}`;
     }
@@ -59,6 +76,7 @@ $(function(){
         return `https://image.tmdb.org/t/p/${size}${imagePath}`
     }
 
+    // Returns the movie descritption (truncated):
     var getMovieDescription = function(movie) {
         var maxLength = 200; // characters
 
@@ -72,6 +90,7 @@ $(function(){
         return description
     }
 
+    // Returns the release data as a Date object:
     const getReleaseDate = function(movie) {
         const date_text = movie.release_date;
         const date = new Date(date_text + "T00:00:00Z");
@@ -79,6 +98,7 @@ $(function(){
         return date;
     }
 
+    // Returns the release date as a formatted string: "Aug 28, 2018", for example.
     const getReleaseDateText = function(movie) {
         const date = getReleaseDate(movie);
 
@@ -120,13 +140,23 @@ $(function(){
         url: 'https://api.themoviedb.org/3/movie/now_playing?page=1&api_key=3ef6eb2432d3b79bfdb2b5bd0702e803',
         success: function(data) {
             console.log('success', data);
+
+            if (!data || !data.results) {
+                const error_message = "One or more movies failed to load. Try reloading the page.";
+                setErrorMessage(error_message);
+            } else {
+                $movies = sortByTitle(data.results);
             
-            $movies = sortByTitle(data.results);
-            
-            reloadMovieView();
+                reloadMovieView();
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            const error_message = "One or more movies failed to load. Try reloading the page.";
+            setErrorMessage(error_message);
         }
     });
 
+    // Empties and resets the list of movies on the page:
     var reloadMovieView = function() {
         
         $movieList.empty();
@@ -141,9 +171,17 @@ $(function(){
                 $movieList.append(getMovieHTML(movie));
             } else {
                 console.log("failed to get movie; i = " + i);
+                
+                const error_message = "One or more movies failed to load. Try reloading the page.";
+                setErrorMessage(error_message);
             }
             
         });
+    }
+
+    // Adds the error message on the page:
+    const setErrorMessage = function(error_message) {
+        $alertDisplay.append(getErrorHTML(error_message));
     }
 
     // Listen to Sort button group:

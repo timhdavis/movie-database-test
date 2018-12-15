@@ -16,13 +16,13 @@
     <div class="container" id="main-content">
 
       <% if !flash[:notice].blank? %>
-        <div class="alert alert-success">
+        <div class="alert alert-success" id="main-notice">
             <%= flash[:notice] %>
         </div>
       <% end %>
 
       <% if !flash[:alert].blank? %>
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" id="main-alert">
             <%= flash[:alert] %>
         </div>
       <% end %>

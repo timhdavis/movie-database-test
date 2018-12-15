@@ -52,10 +52,20 @@ class ReviewTest < ActiveSupport::TestCase
 
   # Test Review.rating valid range:
 
+  test "valid review with rating at min" do
+    @review.rating = @min_rating
+    assert @review.valid?
+  end
+
   test "invalid review with rating below min" do
     @review.rating = (@min_rating - 1)
     refute @review.valid?, "saved review with rating < #{@min_rating}"
     assert_not_nil @review.errors[:name], "no validation error for rating below #{@min_rating}"
+  end
+
+  test "valid review with rating at max" do
+    @review.rating = @max_rating
+    assert @review.valid?
   end
 
   test "invalid review with rating above max" do

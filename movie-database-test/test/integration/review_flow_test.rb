@@ -36,8 +36,8 @@ class ReviewFlowTest < Capybara::Rails::TestCase
     movie = movies(:valid_movie_1)
     visit movie_path(movie)
 
-    email = 'test_email_add_review_1@email.com'
-    comment = 'Test Comment'
+    email = 'test_email_add_review_min@email.com'
+    comment = 'Test Comment Min'
 
     fill_in 'Email', with: email
     fill_in 'Comment',  with: comment
@@ -55,8 +55,8 @@ class ReviewFlowTest < Capybara::Rails::TestCase
     movie = movies(:valid_movie_1)
     visit movie_path(movie)
 
-    email = 'test_email_add_review_1@email.com'
-    comment = 'Test Comment'
+    email = 'test_email_add_review_max@email.com'
+    comment = 'Test Comment Max'
 
     fill_in 'Email', with: email
     fill_in 'Comment',  with: comment
@@ -75,7 +75,7 @@ class ReviewFlowTest < Capybara::Rails::TestCase
     visit movie_path(movie)
 
     email = 'test_email_add_review_2@email.com'
-    comment = 'Test Comment'
+    comment = 'Test Comment 2'
 
     fill_in 'Email', with: email
     fill_in 'Comment',  with: comment
@@ -92,7 +92,7 @@ class ReviewFlowTest < Capybara::Rails::TestCase
     movie = movies(:valid_movie_1)
     visit movie_path(movie)
 
-    fill_in 'Comment',  with: 'Test Comment'
+    fill_in 'Comment',  with: 'Test Comment 3'
 
     # Use jQuery to select Raty star rating in form:
     select_star(3)
