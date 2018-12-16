@@ -4,9 +4,8 @@
 
 <h4>
     <% if (@movie.average_rating > 0) %>
-        Average Rating: 
-        <span class="review-rating" data-score="<%= @movie.average_rating %>">
-        </span> <strong><%= @movie.average_rating.to_s %></strong> / <%= maxRating %>
+        Average Rating:
+        <%= render(:partial => 'reviews/rating', :locals => {:rating => @movie.average_rating }) %>
     <% else %>
         No Reviews Yet
     <% end %>
@@ -127,14 +126,6 @@ $(function() {
 
         $movieCard.html(getMovieHTML(movie));
     }
-
-    $(".review-rating").raty ({
-        readOnly: true,
-        score: function() {
-            return $(this).attr("data-score");
-        },
-        path: "/assets/"
-    });
     
 });
 </script>
