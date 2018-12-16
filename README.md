@@ -25,7 +25,7 @@ https://www.themoviedb.org/documentation/api?language=en
 
 Minitest is used for testing.
 
-Acceptance testing uses Capybara and Selenium (chromedriver).
+Acceptance testing uses Capybara and Selenium ([chromedriver](http://chromedriver.chromium.org/)).
 
 To get chromedriver using Homebrew:
 
