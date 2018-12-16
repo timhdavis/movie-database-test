@@ -42,7 +42,7 @@ class MoviesController < ApplicationController
         redirect_to @movie;
     else
         # If validations prevented save, reload form (with error message):
-        render 'new'; # TODO: change...
+        render 'new';
     end
   end
 

@@ -14,25 +14,17 @@ class ReviewsController < ApplicationController
       #Set movie_id in review:
       movie = Movie.find(params[:movie_id])
 
-      puts("EXISTING Movie found from movie_id = " + movie.id)
-      
     elsif (params[:api_movie_id].present?)
       #Create a new Movie in DB, then set movie_id in review:
       # Check if movie with this api_id is already in the DB:
       movie = Movie.find_by_api_id(params[:api_movie_id])
       
-      if (movie)
-        puts("EXISTING Movie found from api_movie_id = " + params[:api_movie_id])
-      end
-
       if (!movie) # Movie not in DB yet:
         movie = Movie.create(api_id: params[:api_movie_id])
         puts("NEW Movie created from api_movie_id = " + params[:api_movie_id])
       end
 
     else
-      #TODO: redirect to Home with flash: "Can only review a valid movie / Movie not found"
-      # TODO.....
       flash[:alert] = "No movie selected.";
       redirect_to root_path and return
     end

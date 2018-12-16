@@ -33,21 +33,3 @@
     <%= form.hidden_field :movie_id %>
     <%= hidden_field_tag('movie_id', movie_id)  %>
 </div>
-
-<script>
-    $(function(){
-
-        
-
-        $("#rating-form").raty({
-            path: "<%= @star_path %>", // "app/assets/images/", // "/assets/",
-            scoreName: "review[rating]"
-        });
-
-        // $("img[alt='2']").first().trigger('click');
-
-        
-    });
-
-    
-</script>
