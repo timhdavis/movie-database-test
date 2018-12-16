@@ -23,11 +23,11 @@ https://www.themoviedb.org/documentation/api?language=en
 
 #### Running tests:
 
-Minitest is used for testing.
+[Minitest](https://github.com/blowmage/minitest-rails) is used for testing.
 
-Acceptance testing uses Capybara and Selenium ([chromedriver](http://chromedriver.chromium.org/)).
+Acceptance testing uses [Capybara](https://github.com/teamcapybara/capybara) and [Selenium](https://www.seleniumhq.org/) ([chromedriver](http://chromedriver.chromium.org/)).
 
-To get chromedriver using Homebrew:
+To get chromedriver using [Homebrew](https://brew.sh/):
 
 - run `brew tap homebrew/cask` then `brew cask install chromedriver`
 
