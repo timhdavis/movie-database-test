@@ -1,22 +1,7 @@
 <div>
     <% if (movie.average_rating && movie.average_rating > 0) %>
-        <span class="review-rating" data-score="<%= movie.average_rating %>"></span>
+        <%= render(:partial => 'reviews/rating', :locals => {:rating => movie.average_rating }) %>
         <%= link_to(shortened_title(movie).to_s, movie_path(movie)) %>
         <hr>
     <% end %>
 </div>
-
-<script>
-    $(function() {
-        
-        $(".review-rating").raty ({
-            readOnly: true,
-            score: function() {
-                return $(this).attr("data-score");
-            },
-            path: "<%= @star_path %>" // "app/assets/images/" // "/assets/"
-        });
-
-
-    });
-</script>

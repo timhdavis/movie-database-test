@@ -1,5 +1,5 @@
 <div>
-    <span class="review-rating" data-score="<%= review.rating %>"></span>
+    <%= render(:partial => 'reviews/rating', :locals => {:rating => review.rating }) %>
     <span>
         - <%= link_to(shortened_title(review.movie).to_s, movie_path(review.movie)) %>
     </span>
@@ -8,18 +8,3 @@
     <% end %>
     
 </div>
-
-<script>
-    $(function() {
-        
-        $(".review-rating").raty ({
-            readOnly: true,
-            score: function() {
-                return $(this).attr("data-score");
-            },
-            path: "<%= @star_path %>" //"/assets/" // "/assets/"
-        });
-
-
-    });
-</script>
