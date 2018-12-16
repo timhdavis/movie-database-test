@@ -119,7 +119,7 @@ class ReviewFlowTest < Capybara::Rails::TestCase
     test_add_review(email, comment, star_rating)
 
     assert_current_path movie_path(@movie)
-    assert page.has_content?("Email can't be blank")
+    assert page.has_no_content?(@success_message) # Assert failed to add.
   end
 
 
