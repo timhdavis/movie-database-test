@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
     @reviews.each do |review|
       if (!@movies.include?(review.movie))
         @movies.push(review.movie)
-        puts "Adding movie: #{review.movie.id} to @movies"
+        # puts "Adding movie: #{review.movie.id} to @movies"
       end
     end
   end
