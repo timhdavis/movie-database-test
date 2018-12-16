@@ -20,7 +20,7 @@ $(function(){
 
     const $alertDisplay = $("#movie-alert");
 
-    var getErrorHTML = function(error_message) {
+    const getErrorHTML = function(error_message) {
         const html = `<div class="alert alert-danger">
             ${error_message}
             </div>`;
@@ -28,9 +28,9 @@ $(function(){
         return html;
     }
 
-    var getMovieHTML = function(movie) {
+    const getMovieHTML = function(movie) {
         
-        var html = `<div class="movie-card">
+        const html = `<div class="movie-card">
                 <div class="card d-flex flex-row">
                         <img class="rounded" src="${getMovieImage(movie)}" alt="Movie image">
                         <!-- Add Rating Stars here -->
@@ -51,16 +51,23 @@ $(function(){
     }
 
     // Returns the list of parameters for the View Movie link:
-    var getMovieParameters = function(movie) {
+    const getMovieParameters = function(movie) {
         return `api_movie_id=${movie.id}&title=${movie.title}&release_date=${movie.release_date}&genre=${getMainGenre(movie)}&img_path=${movie.poster_path}`;
     }
 
     // Returns the name of the first genre in the movie's genre list:
-    var getMainGenre = function(movie) {
+    const getMainGenre = function(movie) {
         // Check if Genre API call sucessful and movie has at least one genre:
         if ($genres && movie.genre_ids[0]) {
             // Return the Genre with the matching id:
-            return $genres.find(g => g.id === movie.genre_ids[0]);
+            const genre = $genres.find(g => g.id === movie.genre_ids[0]);
+
+            if (genre) {
+                return genre;
+            } else {
+                // Return a placeholder Genre:
+                return { id: -1, name: "Unknown Genre"}
+            }
         } else {
             // Return a placeholder Genre:
             return { id: -1, name: "Unknown Genre"}
@@ -69,18 +76,18 @@ $(function(){
 
     // Returns the image url for the movie poster:
     // See https://developers.themoviedb.org/3/getting-started/images for details.
-    var getMovieImage = function(movie) {
+    const getMovieImage = function(movie) {
 
-        var imagePath = movie.poster_path; //OR backdrop_path;
-        var size = "w200";
+        const imagePath = movie.poster_path; //OR backdrop_path;
+        const size = "w200";
         return `https://image.tmdb.org/t/p/${size}${imagePath}`
     }
 
     // Returns the movie descritption (truncated):
-    var getMovieDescription = function(movie) {
-        var maxLength = 200; // characters
+    const getMovieDescription = function(movie) {
+        const maxLength = 200; // characters
 
-        var description = movie.overview;
+        let description = movie.overview;
 
         if (description.length > maxLength) {
             description = description.substring(0, maxLength);
@@ -157,7 +164,7 @@ $(function(){
     });
 
     // Empties and resets the list of movies on the page:
-    var reloadMovieView = function() {
+    const reloadMovieView = function() {
         
         $movieList.empty();
 
@@ -215,7 +222,7 @@ $(function(){
 
     // Movie Sorting methods:
 
-    var sortByTitle = function(movies) {
+    const sortByTitle = function(movies) {
         // Compare by title alphabetically (ascending):
         movies.sort(function(m1, m2) {return m1.title > m2.title ? 1 : -1;});
 
@@ -224,17 +231,14 @@ $(function(){
         return movies;
     }
 
-    var sortByReleaseDate = function(movies) {
+    const sortByReleaseDate = function(movies) {
         // Compare by release date (newest first):
-        // movies.sort(function(m1, m2) {return m1.release_date < m2.release_date ? 1 : -1;});
-
         movies.sort(function(m1, m2) {return getReleaseDate(m1) < getReleaseDate(m2) ? 1 : -1;});
-        
 
         return movies;
     }
 
-    var sortByGenre = function(movies) {
+    const sortByGenre = function(movies) {
         // Compare by genre alphabetically (ascending):
         movies.sort(function(m1, m2) {return getMainGenre(m1).name > getMainGenre(m2).name ? 1 : -1;});
 
