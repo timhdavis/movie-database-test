@@ -6,7 +6,7 @@ This project is a simple web application for rating movies.
 https://movie-database-test.herokuapp.com (view app live)
 
 
-#### The movies in this project are produced from an API call to **The Movie Database (TMDb)**:
+#### The movies in this project are produced from an API call to *The Movie Database (TMDb)*:
 
 https://www.themoviedb.org/documentation/api?language=en
 
